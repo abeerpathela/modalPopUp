@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    
+    <div class="h-screen w-screen flex flex-col justify-center items-center relative">
+
+        <!-- MODAL -->
+        <div class="modalContainer fixed  hidden items-center justify-center bg-black/40 backdrop-blur-sm z-50">
+
+            <div class="bg-white w-96 p-6 rounded-xl shadow-xl animate-fade-in">
+                <h1 class="text-2xl font-semibold mb-3 text-gray-800">Modals are</h1>
+                <p class="text-gray-600 mb-6">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus dolorum illum ad similique tenetur.
+                </p>
+                <button class="closeModalButton bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg w-full transition">
+                    Close
+                </button>
+            </div>
+
+        </div>
+
+        <!-- BUTTON TO OPEN MODAL -->
+        <button class="modalViewButton bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md transition">
+            click me to view modal
+        </button>
+    </div>
+
+    <!-- JS (unchanged) -->
+    <script>
+        const modalContainer=document.querySelector(".modalContainer");
+        const modalViewButton=document.querySelector(".modalViewButton");
+        const closeModalButton=document.querySelector(".closeModalButton");
+        let isClicked=false;
+        modalContainer.classList.add("hidden");
+        function closeModal(){
+            modalContainer.classList.add("hidden");
+            modalViewButton.innerText="click me to view modal";
+            isClicked=false;
+        }
+        function showModal(){
+            modalContainer.classList.remove("hidden");
+            modalViewButton.innerText="close";
+            isClicked=true;
+        }
+        modalViewButton.addEventListener('click',()=>{
+            if(isClicked==true){
+                closeModal();
+            }
+            else if(isClicked==false){
+                showModal();
+            }
+        })
+        closeModalButton.addEventListener('click',closeModal);
+        document.addEventListener("keydown",(event)=>{
+            let key=event.key;
+            if(key==="Enter"){
+                if(isClicked==true){
+                    closeModal();
+                }
+                else if(isClicked==false){
+                    showModal();
+                }
+            }
+        })
+    </script>
+
+    <style>
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.3s ease-out;
+        }
+    </style>
+
+</body>
+</html>
